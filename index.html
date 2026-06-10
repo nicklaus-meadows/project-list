@@ -400,7 +400,7 @@
           <thead>
             <tr>
               <th scope="col">Project Name</th>
-              <th scope="col">Description</th>
+              <th scope="col">Description/Blocker</th>
               <th scope="col">Timeline</th>
               <th scope="col">Progress</th>
             </tr>
@@ -408,7 +408,7 @@
           <tbody>
             <tr>
               <td class="project-name" data-label="Project Name">
-                Project: Organics SEO
+                Project: Organic SEO
               </td>
               <td data-label="Description">
                 Express Items Targeted. Full first round hit through all steps.
@@ -417,17 +417,20 @@
               <td
                 class="progress-cell"
                 data-label="Progress"
-                data-progress="5.88"
+                data-progress="17.65"
               >
                 <div class="progress-top">
                   <span class="progress-label">Completion</span>
-                  <span class="progress-value">5.88%</span>
+                  <span class="progress-value">17.65%</span>
                 </div>
                 <div
                   class="progress-track"
-                  aria-label="Project: Organics SEO is 5.88% complete"
+                  aria-label="Project: Organics SEO is 17.65% complete"
                 >
-                  <div class="progress-fill low" style="--progress: 5.88"></div>
+                  <div
+                    class="progress-fill low"
+                    style="--progress: 17.65"
+                  ></div>
                 </div>
               </td>
             </tr>
@@ -436,7 +439,7 @@
                 Google Merchant Proper Setup
               </td>
               <td data-label="Description">
-                Underutilized opportunity that we need to capitalize on.
+                Main lift is done, need to fix the outliers.
               </td>
               <td class="timeline" data-label="Timeline">
                 By End of Q3 2026 Latest
@@ -444,17 +447,17 @@
               <td
                 class="progress-cell"
                 data-label="Progress"
-                data-progress="70"
+                data-progress="90"
               >
                 <div class="progress-top">
                   <span class="progress-label">Completion</span>
-                  <span class="progress-value">70%</span>
+                  <span class="progress-value">90%</span>
                 </div>
                 <div
                   class="progress-track"
-                  aria-label="Google Merchant Proper Setup is 70% complete"
+                  aria-label="Google Merchant Proper Setup is 90% complete"
                 >
-                  <div class="progress-fill" style="--progress: 70"></div>
+                  <div class="progress-fill" style="--progress: 90"></div>
                 </div>
               </td>
             </tr>
@@ -462,20 +465,22 @@
               <td class="project-name" data-label="Project Name">
                 AMCO Cross Reference
               </td>
-              <td data-label="Description">
-                Develop, test, and deploy the cross-reference system.
-              </td>
+              <td data-label="Description">done.</td>
               <td class="timeline" data-label="Timeline">End of July Latest</td>
-              <td class="progress-cell" data-label="Progress" data-progress="2">
+              <td
+                class="progress-cell"
+                data-label="Progress"
+                data-progress="100"
+              >
                 <div class="progress-top">
                   <span class="progress-label">Completion</span>
-                  <span class="progress-value">2%</span>
+                  <span class="progress-value">100%</span>
                 </div>
                 <div
                   class="progress-track"
-                  aria-label="AMCO Cross Reference is 2% complete"
+                  aria-label="AMCO Cross Reference is 100% complete"
                 >
-                  <div class="progress-fill low" style="--progress: 2"></div>
+                  <div class="progress-fill low" style="--progress: 100"></div>
                 </div>
               </td>
             </tr>
@@ -504,6 +509,53 @@
                 </div>
               </td>
             </tr>
+            <tr>
+              <td class="project-name" data-label="Project Name">
+                Sana Web Scraper
+              </td>
+              <td data-label="Description">
+                Create new web scraper because Sana likes to lockout data.
+              </td>
+              <td class="timeline" data-label="Timeline">Probably by EOW</td>
+              <td
+                class="progress-cell"
+                data-label="Progress"
+                data-progress="100"
+              >
+                <div class="progress-top">
+                  <span class="progress-label">Completion</span>
+                  <span class="progress-value">100%</span>
+                </div>
+                <div
+                  class="progress-track"
+                  aria-label="Sana Web Scraper is 100% complete"
+                >
+                  <div class="progress-fill low" style="--progress: 100"></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="project-name" data-label="Project Name">Bioz</td>
+              <td data-label="Description">
+                Waiting to see which products we want to target? and placement?
+              </td>
+              <td class="timeline" data-label="Timeline">
+                2 weeks max once placement and target are decided.
+              </td>
+              <td
+                class="progress-cell"
+                data-label="Progress"
+                data-progress="95"
+              >
+                <div class="progress-top">
+                  <span class="progress-label">Completion</span>
+                  <span class="progress-value">95%</span>
+                </div>
+                <div class="progress-track" aria-label="Bioz is 95% complete">
+                  <div class="progress-fill" style="--progress: 95"></div>
+                </div>
+              </td>
+            </tr>
           </tbody>
         </table>
       </section>
@@ -511,6 +563,22 @@
 
     <script>
       const table = document.querySelector("#projectTable");
+      const tableBody = table.querySelector("tbody");
+      const sortCompletedProjectsToBottom = () => {
+        [...tableBody.querySelectorAll("tr")]
+          .map((row, index) => ({
+            row,
+            index,
+            isComplete:
+              Number(row.querySelector("[data-progress]")?.dataset.progress) >=
+              100,
+          }))
+          .sort((a, b) => a.isComplete - b.isComplete || a.index - b.index)
+          .forEach(({ row }) => tableBody.appendChild(row));
+      };
+
+      sortCompletedProjectsToBottom();
+
       const progressCells = [...table.querySelectorAll("[data-progress]")];
       const progressValues = progressCells.map((cell) =>
         Number(cell.dataset.progress),
